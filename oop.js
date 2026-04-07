@@ -15,6 +15,8 @@ const lion = {
 
 lion.makeSound();
 
+console.log('-=-=-==-=-=-=-=-=-=-');
+
 // Class Template (Encapsulation)
 class Animal {
     constructor(name, species) {
@@ -46,6 +48,8 @@ class Animal {
 }
 
 const myDog = new Animal('ด่าง', 'สุนัขจรจัด');
+const myDog2 = new Animal('ดำ', 'ลอตไวเลอร์');
+const myDog3 = new Animal('แดง', 'ลาบาดอร์');
 const myCat = new Animal('นวล', 'แมวไทย');
 
 console.log(myDog.name);
@@ -58,3 +62,48 @@ myDog.eat();
 
 myCat.runFast();
 myCat.runFast();
+
+console.log('-=-=-==-=-=-=-=-=-=-');
+
+// Specialized classes (Inheritance)
+class Mammal extends Animal {
+    constructor(name, species, furColor) {
+        super(name, species); // Calls the parens constructor
+        this.furColor = furColor;
+    }
+
+    groom() {
+        console.log(`${this.name} is brushing its ${this.furColor} fur.`);
+    }
+}
+
+const myLion = new Mammal('ลีโอ', 'สิงโตน้ำเงินคราม', 'blue');
+myLion.groom();
+
+class Bird extends Animal {
+    constructor(name, species, wingSpan) {
+        super(name, species);
+        this.wingSpan = wingSpan;
+    }
+
+    makeSound() {
+        console.log(`${this.name} chirps "Tweet Tweet!"`);
+    }
+
+    changeName(newName) {
+        const oldName = this.name;
+        this.name = newName;
+        console.log(`${oldName} was changed name, this bird's name is ${this.name} now!`);
+    }
+}
+
+const myBird = new Bird('ขุนทอง', 'นกพูดเก่ง', '20cm');
+const myBird2 = new Bird('aaaa', 'นกพูดเก่ง', '20cm');
+const myBird3 = new Bird('bbb', 'นกพูดเก่ง', '20cm');
+const myBird4 = new Bird('cccc', 'นกพูดเก่ง', '20cm');
+myBird.makeSound();
+myBird2.makeSound();
+myBird3.makeSound();
+
+myBird4.makeSound();
+myBird4.changeName('นกอินทรี');
