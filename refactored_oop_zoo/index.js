@@ -5,6 +5,9 @@ import Zoo from './Zoo.js';
 
 const myZoo = new Zoo('The JS Terminal Zoo');
 
+console.log(typeof Zoo);
+console.log(typeof myZoo);
+
 // create instances of class Animal, Mammal, and/or Bird
 const leo = new Animal('Leo', 'Lion');
 const zazu = new Bird('Zazu', 'Hornbill', '2 feet');
