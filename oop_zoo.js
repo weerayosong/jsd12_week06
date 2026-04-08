@@ -2,54 +2,60 @@
 
 // Base Class (Encapsulation)
 class Animal {
-  constructor(name, species) {
-    this.name = name;
-    this.species = species;
-    this._hunger = 50; //internal Stage (protected by _)
-  }
-
-  makeSound() {
-    console.log(`${this.name} makes a sound...`);
-  }
-
-  eat() {
-    // this._hunger -= 10;
-    // console.log(
-    //   `${this.name} the ${this.species} ate. Hunger is now ${this._hunger}`,
-    // );
-    if (this._hunger <= 0) {
-      console.log(`${this.name} is already full!`);
-    } else {
-      console.log(`${this.name} ate. Hunger is now ${this._hunger}`);
+    constructor(name, species) {
+        this.name = name;
+        this.species = species;
+        this._hunger = 15; //internal Stage (protected by _)
     }
-  }
+
+    getStatus() {
+        if (this._hunger <= 0) return 'Full';
+        if (this._hunger <= 20) return 'Satisfied';
+        return 'Hungry';
+    }
+
+    makeSound() {
+        console.log(`${this.name} makes a sound...`);
+    }
+
+    eat() {
+        // this._hunger -= 10;
+        // console.log(
+        //   `${this.name} the ${this.species} ate. Hunger is now ${this._hunger}`,
+        // );
+        if (this._hunger <= 0) {
+            console.log(`${this.name} is already full!`);
+        } else {
+            console.log(`${this.name} ate. Hunger is now ${this._hunger}`);
+        }
+    }
 }
 
 // Example of inheritance
 // Bird and Mammal gets everything from Animal via 'extends'
 
 class Mammal extends Animal {
-  constructor(name, species, furColor) {
-    super(name, species);
-    this.furColor = furColor;
-  }
+    constructor(name, species, furColor) {
+        super(name, species);
+        this.furColor = furColor;
+    }
 
-  groom() {
-    console.log(`${this.name} is brushing their ${this.furColor}`);
-  }
+    groom() {
+        console.log(`${this.name} is brushing their ${this.furColor}`);
+    }
 }
 
 class Bird extends Animal {
-  constructor(name, species, wingspan) {
-    super(name, species);
-    this.wingspan = wingspan;
-  }
+    constructor(name, species, wingspan) {
+        super(name, species);
+        this.wingspan = wingspan;
+    }
 
-  // This is an example of polymorphism; overide the parent's method
+    // This is an example of polymorphism; overide the parent's method
 
-  makeSound() {
-    console.log(`${this.name} chirps: Tweet! Tweet!`);
-  }
+    makeSound() {
+        console.log(`${this.name} chirps: Tweet! Tweet!`);
+    }
 }
 
 //console.log(zazu);
@@ -58,38 +64,44 @@ class Bird extends Animal {
 // A class to hold and run our animal objects:
 
 class Zoo {
-  constructor(zooName) {
-    this.zooName = zooName;
-    this.animals = [];
-  }
+    constructor(zooName) {
+        this.zooName = zooName;
+        this.animals = [];
+    }
 
-  addAnimal(animal) {
-    this.animals.push(animal);
-    console.log(`Added ${animal.name} to the ${this.zooName}`);
-  }
+    addAnimal(animal) {
+        this.animals.push(animal);
+        console.log(`Added ${animal.name} to the ${this.zooName}`);
+    }
 
-  showAllAnimals() {
-    console.log(`\n--- Welcome to ${this.zooName} ---`);
-    this.animals.forEach((animal) => {
-      // Accessing properties and calling methods
-      //   console.log(`Animal: ${animal.name} | Status: ${animal.getStatus()}`);
-      console.log(`Animal: ${animal.name} `);
+    showAllAnimals() {
+        console.log(`\n--- Welcome to ${this.zooName} ---`);
+        this.animals.forEach((animal) => {
+            // Accessing properties and calling methods
+            console.log('Here -->', animal);
+            console.log(
+                Object.getOwnPropertyNames(Object.getPrototypeOf(animal)),
+            );
+            console.log(
+                `Animal: ${animal.name} | Status: ${animal.getStatus()}`,
+            );
+            // console.log(`Animal: ${animal.name} `);
 
-      animal.makeSound();
-      animal.eat();
-      console.log("-------------------");
-    });
-  }
+            animal.makeSound();
+            animal.eat();
+            // console.log(`Animal Status: ${animal.getStatus()}`);
+            console.log('-------------------');
+        });
+    }
 }
 
-//Execution
-
-const myZoo = new Zoo("The JS Terminal Zoo");
+// Execution
+const myZoo = new Zoo('The JS Terminal Zoo');
 
 // create instances of class Animal, Mammal, and/or Bird
-const leo = new Animal("Leo", "Lion");
-const zazu = new Bird("Zazu", "Hornbill", "2 feet");
-const baloo = new Mammal("Baloo", "Bear", "Brown");
+const leo = new Animal('Leo', 'Lion');
+const zazu = new Bird('Zazu', 'Hornbill', '2 feet');
+const baloo = new Mammal('Baloo', 'Bear', 'Brown');
 
 myZoo.addAnimal(leo);
 myZoo.addAnimal(zazu);

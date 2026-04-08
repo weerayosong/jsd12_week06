@@ -47,10 +47,10 @@ class Animal {
     }
 }
 
-const myDog = new Animal('ด่าง', 'สุนัขจรจัด');
-const myDog2 = new Animal('ดำ', 'ลอตไวเลอร์');
-const myDog3 = new Animal('แดง', 'ลาบาดอร์');
-const myCat = new Animal('นวล', 'แมวไทย');
+const myDog = new Animal('จ้าวหยุน', 'สุนัขชิบะ');
+const myDog2 = new Animal('จ้าวเข้ม', 'สุนัขลอตไวเลอร์');
+const myDog3 = new Animal('จ้าวทอง', 'สุนัขลาบาดอร์');
+const myCat = new Animal('จ้าวส้ม', 'แมวส้ม');
 
 console.log(myDog.name);
 console.log(myCat.species);
@@ -77,7 +77,7 @@ class Mammal extends Animal {
     }
 }
 
-const myLion = new Mammal('ลีโอ', 'สิงโตน้ำเงินคราม', 'blue');
+const myLion = new Mammal('จ้าวลีโอ', 'สิงโตแอฟริกัน', 'สีทอง');
 myLion.groom();
 
 class Bird extends Animal {
@@ -93,17 +93,19 @@ class Bird extends Animal {
     changeName(newName) {
         const oldName = this.name;
         this.name = newName;
-        console.log(`${oldName} was changed name, this bird's name is ${this.name} now!`);
+        console.log(
+            `${oldName} was changed name, this bird's name is ${this.name} now!`,
+        );
     }
 }
 
-const myBird = new Bird('ขุนทอง', 'นกพูดเก่ง', '20cm');
-const myBird2 = new Bird('aaaa', 'นกพูดเก่ง', '20cm');
-const myBird3 = new Bird('bbb', 'นกพูดเก่ง', '20cm');
-const myBird4 = new Bird('cccc', 'นกพูดเก่ง', '20cm');
+const myBird = new Bird('จ้าวขุนทอง', 'นกขุนทอง', '20cm');
+const myBird2 = new Bird('จ้าวaaa', 'นกยูง', '20cm');
+const myBird3 = new Bird('จ้าวbbb', 'นกแก้ว', '20cm');
+const myBird4 = new Bird('จ้าวcccc', 'นกอินทรี', '20cm');
 myBird.makeSound();
 myBird2.makeSound();
 myBird3.makeSound();
 
 myBird4.makeSound();
-myBird4.changeName('นกอินทรี');
+myBird4.changeName('จ้าวอินทรี');
