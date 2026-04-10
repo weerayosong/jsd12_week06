@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>API & DOM Learning</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="container mx-auto bg-white text-zinc-700 font-mono p-4">
+        <h1 class="text-2xl font-bold mb-6 border-b-2 border-zinc-500 pb-2">
+            API Data Fetching
+        </h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="border-2 border-zinc-500 p-4">
+                <h2 class="text-xl font-bold bg-zinc-500 text-white p-2 mb-4">
+                    1. API Ninjas
+                </h2>
+                <div id="content-animals">Loading...</div>
+            </div>
+
+            <div class="border-2 border-zinc-500 p-4">
+                <h2 class="text-xl font-bold bg-zinc-500 text-white p-2 mb-4">
+                    2. JSONPlaceholder Users
+                </h2>
+                <div id="content-users">Loading...</div>
+            </div>
+
+            <div class="border-2 border-zinc-500 p-4">
+                <h2 class="text-xl font-bold bg-zinc-500 text-white p-2 mb-4">
+                    3. Star Wars Starships
+                </h2>
+                <div id="content-sw">Loading...</div>
+            </div>
+
+            <div class="border-2 border-zinc-500 p-4">
+                <h2 class="text-xl font-bold bg-zinc-500 text-white p-2 mb-4">
+                    4. Star Wars Jedi (Darth Vader)
+                </h2>
+                <div id="content-jedi">Loading...</div>
+            </div>
+
+            <div class="border-2 border-zinc-500 p-4">
+                <h2 class="text-xl font-bold bg-zinc-500 text-white p-2 mb-4">
+                    5. Dog API - https://dog.ceo/api/breeds/image/random/3
+                </h2>
+                <div id="content-dog">Loading...</div>
+            </div>
+
+            <div class="border-2 border-zinc-500 p-4">
+                <h2 class="text-xl font-bold bg-zinc-500 text-white p-2 mb-4">
+                    6. Cat Facts - https://catfact.ninja/facts?limit=3
+                </h2>
+                <div id="content-cats">Loading...</div>
+            </div>
+        </div>
+
+        <script>
+            const CONFIG = {
+                ninjasApiKey: 'Ic5RiIec4AckqLhNbIGZEmrK4NYSM1VMX8ipdt9S', // API Key
+            };
+
+            // ==========================================
+            // แบบที่ 1: ดึง Array มา แล้วชี้เป้าเอาแค่ตัวแรก
+            // ==========================================
+            fetch('https://api.api-ninjas.com/v1/animals?name=hor', {
+                headers: { 'X-Api-Key': CONFIG.ninjasApiKey },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    const firstAnimal = data[0]; // ดึงข้อมูลตัวแรกมาตรงๆ
+                    document.getElementById('content-animals').innerHTML = `
+                    <div class="font-bold text-lg">Name: ${firstAnimal.name}</div>
+                    <div>- Diet: ${firstAnimal.characteristics.diet}</div>
+                    <div>- Habitat: ${firstAnimal.characteristics.habitat}</div>
+                `;
+                })
+                .catch((error) => {
+                    document.getElementById('content-animals').innerHTML =
+                        `<span class="text-red-500">Error: Enter your API Key?</span>`;
+                });
+
+            // ==========================================
+            // แบบที่ 2: ดึง Array มา แล้วใช้ forEach วนลูปสร้าง HTML
+            // ==========================================
+            fetch('https://jsonplaceholder.typicode.com/users?_limit=3')
+                .then((response) => response.json())
+                .then((usersData) => {
+                    let htmlString = '';
+                    usersData.forEach((user) => {
+                        htmlString += `
+                        <div class="mb-2 pb-2 border-b border-gray-300">
+                            <b>${user.name}</b> (${user.company.name})
+                        </div>
+                    `;
+                    });
+                    document.getElementById('content-users').innerHTML =
+                        htmlString;
+                });
+
+            // ==========================================
+            // แบบที่ 3: ดึง Object มา แต่ข้อมูลที่เราอยากได้อยู่ใน property 'results'
+            // ==========================================
+            fetch('https://swapi.dev/api/starships/')
+                .then((response) => response.json())
+                .then((data) => {
+                    const firstShip = data.results[0]; // เข้าไปที่ results ก่อน แล้วดึงตัวแรก
+                    document.getElementById('content-sw').innerHTML = `
+                    <div class="font-bold text-lg">${firstShip.name}</div>
+                    <div>- Model: ${firstShip.model}</div>
+                    <div>- manufacturer: ${firstShip.manufacturer}</div>
+                    <div>- starship_class: ${firstShip.starship_class}</div>
+                `;
+                });
+
+            // ==========================================
+            // แบบที่ 4: ดึงข้อมูลคนเดียวตรงๆ
+            // ==========================================
+            fetch('https://swapi.dev/api/people/4/') // ดึงแค่ ID 4 (Darth Vader)
+                .then((response) => response.json())
+                .then((jediData) => {
+                    // ข้อมูลที่ได้มาเป็น Object ก้อนเดียว ไม่ใช่ Array
+                    document.getElementById('content-jedi').innerHTML = `
+                    <div class="font-bold text-lg">${jediData.name}</div>
+                    <div>- Height: ${jediData.height} cm</div>
+                    <div>- Mass: ${jediData.mass} kg</div>
+                `;
+                });
+
+            // ==========================================
+            // แบบที่ 5: การดึงรูปภาพมาแสดงผล (เอาแค่รูปแรก)
+            // ==========================================
+            fetch('https://dog.ceo/api/breeds/image/random/3')
+                .then((response) => response.json())
+                .then((data) => {
+                    const firstImage = data.message[0]; // URL ของรูปภาพ
+                    document.getElementById('content-dog').innerHTML = `
+                    <img src="${firstImage}" alt="Random Dog" class="h-full w-auto h-40 object-cover border border-black">
+                `;
+                });
+
+            // ==========================================
+            // แบบที่ 6: การเข้าถึง Object ซ้อน Array
+            // ==========================================
+            fetch('https://catfact.ninja/facts?limit=3')
+                .then((response) => response.json())
+                .then((data) => {
+                    const firstFact = data.data[0].fact;
+                    document.getElementById('content-cats').innerHTML = `
+                    <p class="italic text-lg">"${firstFact}"</p>
+                `;
+                });
+        </script>
+    </body>
+</html>
