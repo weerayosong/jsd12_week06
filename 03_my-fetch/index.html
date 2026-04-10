@@ -107,7 +107,7 @@
             fetch('https://swapi.dev/api/starships/')
                 .then((response) => response.json())
                 .then((data) => {
-                    const firstShip = data.results[0]; // เข้าไปที่ results ก่อน แล้วดึงตัวแรก
+                    const firstShip = data.results[1]; // เข้าไปที่ results ก่อน แล้วดึงตัวแรก
                     document.getElementById('content-sw').innerHTML = `
                     <div class="font-bold text-lg">${firstShip.name}</div>
                     <div>- Model: ${firstShip.model}</div>
